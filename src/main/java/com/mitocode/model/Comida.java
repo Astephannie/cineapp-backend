@@ -1,10 +1,16 @@
 package com.mitocode.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,6 +32,10 @@ public class Comida {
 	@JsonIgnore
 	@Column(name= "foto", updatable = false)
 	private byte[] foto;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "comida_venta", joinColumns = @JoinColumn(name = "id_comida", referencedColumnName = "idComida"), inverseJoinColumns = @JoinColumn(name = "id_venta", referencedColumnName = "idVenta"))
+	private List<Venta> ventas;
 	
 	public Integer getIdComida() {
 		return idComida;
